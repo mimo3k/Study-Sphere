@@ -1,0 +1,374 @@
+<!-- Day 13 Main Activity Start: Setting up the basic HTML structure, including the DOCTYPE, html tag, head with meta tags, title, and links to external resources like fonts, icons, and Bootstrap CSS. This establishes the foundation for the document's encoding, viewport, and styling dependencies. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Academic Portal • Competitions • STEM • Lessons</title>
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<!-- Day 13 Main Activity End -->
+
+<!-- Day 13 Additional Activity Start: Defining root CSS variables and basic body styles for theme consistency, including scroll behavior, font family, and a gradient background to evoke a modern, educational atmosphere. -->
+    <style>
+        :root{
+            --primary:#0d6efd; /* Bootstrap primary */
+            --secondary:#6c757d;
+            --success:#28a745;
+            --warning:#ffc107;
+            --info:#0dcaf0;
+            --surface:#ffffff;
+            --muted:#f1f5f9;
+            --shadow:0 10px 30px rgba(0,0,0,.10);
+            --radius-xxl:1.25rem;
+        }
+        html{scroll-behavior:smooth}
+        body{font-family:'Poppins',system-ui,Segoe UI,Roboto; background:linear-gradient(135deg,#ffffff,#e6f0fa);}
+    </style>
+<!-- Day 13 Additional Activity End -->
+
+<!-- Day 14 Main Activity Start: Implementing the CSS-only science background with grid and orb elements for a fixed, animated, non-interactive overlay that adds a STEM-inspired visual depth without affecting usability. -->
+    <style>
+        /* ===== SCIENCE 3D BACKGROUND (CSS‑only) ===== */
+        .science-bg{position:fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none;}
+        .science-bg .grid{position:absolute; inset:-20%; background: radial-gradient(circle at 1px 1px, rgba(13,110,253,.18) 1px, transparent 2px) 0 0/26px 26px, radial-gradient(circle at 1px 1px, rgba(25,135,84,.14) 1px, transparent 2px) 13px 13px/26px 26px; filter:blur(.2px); animation:gridDrift 40s linear infinite;}
+        @keyframes gridDrift{0%{transform:translate3d(0,0,0)}100%{transform:translate3d(-120px,-80px,0)}}
+        .science-bg .orb{position:absolute; width:420px; height:420px; background:radial-gradient(closest-side, rgba(13,110,253,.20), rgba(13,110,253,0)); border-radius:50%; filter:blur(6px);}
+        .science-bg .orb.o1{top:-8%; left:-6%; animation:float1 22s ease-in-out infinite alternate}
+        .science-bg .orb.o2{bottom:-10%; right:-6%; background:radial-gradient(closest-side, rgba(13,202,240,.18), rgba(13,202,240,0)); animation:float2 26s ease-in-out infinite alternate}
+        .science-bg .orb.o3{top:20%; right:15%; width:520px; height:520px; background:radial-gradient(closest-side, rgba(255,193,7,.16), rgba(255,193,7,0)); animation:float3 28s ease-in-out infinite alternate}
+        @keyframes float1{to{transform:translate3d(40px,30px,0)}}
+        @keyframes float2{to{transform:translate3d(-60px,-20px,0)}}
+        @keyframes float3{to{transform:translate3d(20px,-40px,0)}}
+    </style>
+<!-- Day 14 Main Activity End -->
+
+<!-- Day 14 Additional Activity Start: Adding the decorative CSS-only DNA helix animation for an overlay effect, enhancing the scientific theme with rotating elements that simulate a 3D structure. -->
+    <style>
+        /* CSS‑only DNA Helix (decorative) */
+        .dna{position:fixed; left:50%; top:50%; width:min(900px,92vw); height:100vh; transform:translate(-50%,-50%); pointer-events:none; mix-blend-mode:overlay; opacity:.45; perspective:1000px}
+        .dna .strand{position:absolute; inset:8vh 0 8vh 0; transform-style:preserve-3d}
+        .dna .strand span{position:absolute; left:50%; transform:translateX(-50%); width:320px; height:2px}
+        .dna .strand span::before, .dna .strand span::after{content:""; position:absolute; top:0; width:16px; height:16px; border-radius:50%; box-shadow:0 0 10px rgba(13,110,253,.5)}
+        .dna .strand span::before{left:50%; transform:translateX(-140px); background:linear-gradient(180deg,#0d6efd,#7cb2ff); animation:orbitL 6.5s linear infinite; animation-delay:calc(var(--i)*-0.1s)}
+        .dna .strand span::after{left:50%; transform:translateX(140px); background:linear-gradient(180deg,#20c997,#a7f3d0); animation:orbitR 6.5s linear infinite; animation-delay:calc(var(--i)*-0.1s)}
+        @keyframes orbitL{0%,100%{transform:translateX(-140px) scale(.6); opacity:.55}50%{transform:translateX(140px) scale(1); opacity:1}}
+        @keyframes orbitR{0%,100%{transform:translateX(140px) scale(.6); opacity:.55}50%{transform:translateX(-140px) scale(1); opacity:1}}
+        .dna .strand span{top:calc(var(--i)*3.8%)}
+    </style>
+<!-- Day 14 Additional Activity End -->
+
+<!-- Day 15 Main Activity Start: Defining layout helper styles for navbar, to-top button, sections, and feature cards to ensure consistent shadows, radii, and visual hierarchy across the page. -->
+    <style>
+        /* Layout helpers */
+        .navbar{box-shadow:var(--shadow)}
+        .navbar .brand-mark{display:inline-flex;align-items:center;gap:.5rem}
+        .navbar .brand-mark i{font-size:1.5rem}
+        .to-top{position:fixed; right:1rem; bottom:1rem; z-index:1030}
+        /* Section visuals */
+        section{scroll-margin-top:6rem}
+        .section-title{position:relative; display:inline-block}
+        .section-title::after{content:""; position:absolute; left:0; bottom:-.4rem; width:72px; height:4px; border-radius:999px; background:linear-gradient(90deg,#28a745,#ffc107)}
+        .feature-card{border:0; border-radius:1rem; background:linear-gradient(180deg,#fff,#f8fafc); box-shadow:var(--shadow)}
+    </style>
+<!-- Day 15 Main Activity End -->
+
+<!-- Day 15 Additional Activity Start: Styling the hero carousel, including overlay, caption, and image properties for an engaging header section with blurred backdrop and rounded elements. -->
+    <style>
+        /* Hero Carousel */
+        #heroCarousel{border-radius:var(--radius-xxl); overflow:hidden; box-shadow:var(--shadow)}
+        .hero-overlay{position:absolute; inset:0; background:linear-gradient(180deg,rgba(0,0,0,.25),rgba(0,0,0,.25))}
+        .hero-caption{backdrop-filter:saturate(140%) blur(6px); background:rgba(255,255,255,.88); border-radius:1rem; padding:1.1rem 1.25rem; color:#212529; box-shadow:var(--shadow)}
+        .hero-img{height:60vh; object-fit:cover}
+    </style>
+<!-- Day 15 Additional Activity End -->
+
+<!-- Day 16 Main Activity Start: Adding styles for news cards, leaderboard winner cards, and STEM tiles with hover effects, transitions, and media queries for responsiveness. -->
+    <style>
+        /* Cards */
+        .news-card{border:none; border-radius:1rem; box-shadow:var(--shadow); overflow:hidden; transition:transform .25s ease, box-shadow .25s ease; background:linear-gradient(180deg,#fff,#f8f9fa)}
+        .news-card:hover{transform:translateY(-6px); box-shadow:0 14px 30px rgba(0,0,0,.12)}
+        .news-card .card-img-top{height:240px; object-fit:cover;}
+        /* Leaderboard */
+        .winner-card{border:0; border-radius:1rem; box-shadow:var(--shadow)}
+        /* STEM tiles */
+        .stem-tile{border:0; border-radius:1rem; box-shadow:var(--shadow); transition:transform .2s ease}
+        .stem-tile:hover{transform:translateY(-5px)}
+        footer{background:linear-gradient(90deg,var(--primary),#00c6ff); color:#fff}
+        @media (max-width: 768px){.news-card .card-img-top{height:200px}}
+    </style>
+</head>
+<!-- Day 16 Main Activity End -->
+
+<!-- Day 16 Additional Activity Start: Starting the body tag with scroll spy attributes and adding the science background div with grid, orbs, and DNA strand spans for the decorative overlay. -->
+<body data-bs-spy="scroll" data-bs-target="#mainNav" data-bs-offset="80">
+    <!-- Background layers -->
+    <div class="science-bg" aria-hidden="true">
+        <div class="grid"></div>
+        <div class="orb o1"></div>
+        <div class="orb o2"></div>
+        <div class="orb o3"></div>
+        <div class="dna"><div class="strand">
+            <span style="--i:1"></span><span style="--i:2"></span><span style="--i:3"></span><span style="--i:4"></span><span style="--i:5"></span><span style="--i:6"></span>
+            <span style="--i:7"></span><span style="--i:8"></span><span style="--i:9"></span><span style="--i:10"></span><span style="--i:11"></span><span style="--i:12"></span>
+            <span style="--i:13"></span><span style="--i:14"></span><span style="--i:15"></span><span style="--i:16"></span><span style="--i:17"></span><span style="--i:18"></span>
+            <span style="--i:19"></span><span style="--i:20"></span><span style="--i:21"></span><span style="--i:22"></span><span style="--i:23"></span><span style="--i:24"></span>
+        </div></div>
+    </div>
+<!-- Day 16 Additional Activity End -->
+
+<!-- Day 17 Main Activity Start: Creating the navbar with brand, toggler, and navigation links for main sections, ensuring sticky positioning and responsive collapse. -->
+    <!-- NAVBAR -->
+    <nav id="mainNav" class="navbar navbar-expand-lg bg-white sticky-top">
+        <div class="container-fluid px-3">
+            <a class="navbar-brand brand-mark fw-semibold" href="#home"><i class="bi bi-mortarboard-fill text-primary"></i><span>Academic Portal</span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navContent" aria-controls="navContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center gap-lg-2">
+                    <li class="nav-item"><a class="nav-link active" href="#home"><i class="bi bi-house-door me-1"></i>Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#competitions"><i class="bi bi-flag me-1"></i>Competitions</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#winners"><i class="bi bi-trophy me-1"></i>Winners</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#success"><i class="bi bi-emoji-smile me-1"></i>Success Stories</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#stem"><i class="bi bi-cpu me-1"></i>STEM Hub</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#tracks"><i class="bi bi-diagram-3 me-1"></i>Tracks</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#lessons"><i class="bi bi-journal-text me-1"></i>Lessons</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#research"><i class="bi bi-flask me-1"></i>Research</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#mentors"><i class="bi bi-person-badge me-1"></i>Mentors</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#resources"><i class="bi bi-download me-1"></i>Resources</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#faq"><i class="bi bi-question-circle me-1"></i>FAQ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#events"><i class="bi bi-calendar-event me-1"></i>Events</a></li>
+                    <li class="nav-item d-lg-none"><hr class="dropdown-divider"></li>
+                    <li class="nav-item"><button class="btn btn-outline-primary ms-lg-2" data-bs-toggle="offcanvas" data-bs-target="#quickLinks" aria-controls="quickLinks"><i class="bi bi-compass me-1"></i>Quick Links</button></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+<!-- Day 17 Main Activity End -->
+
+<!-- Day 17 Additional Activity Start: Implementing the offcanvas for quick links with header, close button, and list group items for easy access to key sections on smaller screens. -->
+    <!-- OFFCANVAS: Quick Links -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="quickLinks" aria-labelledby="quickLinksLabel">
+        <div class="offcanvas-header"><h5 id="quickLinksLabel" class="mb-0"><i class="bi bi-compass me-2"></i>Quick Links</h5><button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button></div>
+        <div class="offcanvas-body">
+            <div class="list-group list-group-flush">
+                <a class="list-group-item list-group-item-action" href="#competitions"><i class="bi bi-flag me-2"></i>Competitions Hub</a>
+                <a class="list-group-item list-group-item-action" href="#winners"><i class="bi bi-trophy me-2"></i>Current Winners</a>
+                <a class="list-group-item list-group-item-action" href="#success"><i class="bi bi-emoji-smile me-2"></i>Success Stories</a>
+                <a class="list-group-item list-group-item-action" href="#lessons"><i class="bi bi-collection-play me-2"></i>Study Lessons</a>
+                <a class="list-group-item list-group-item-action" href="#stem"><i class="bi bi-cpu me-2"></i>STEM Concepts</a>
+            </div>
+        </div>
+    </div>
+<!-- Day 17 Additional Activity End -->
+
+<!-- Day 18 Main Activity Start: Building the hero carousel header with indicators, inner slides, images, overlays, captions, and control buttons for a dynamic introductory slideshow. -->
+    <!-- HERO: Bootstrap Carousel (4 slides) -->
+    <header id="home" class="container-fluid px-3 pt-4">
+        <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active position-relative">
+                    <img src="https://classicalconversations.com/wp-content/uploads/2025/01/Jan2025_Blog_ScienceFair_1200x628px.jpg" class="d-block w-100 hero-img" alt="Science Fair">
+                    <div class="hero-overlay"></div>
+                    <div class="carousel-caption d-block">
+                        <div class="hero-caption mx-auto" style="max-width:920px;">
+                            <div class="d-flex flex-wrap gap-2 mb-2 justify-content-center"><span class="badge rounded-pill text-bg-success">Science</span><span class="badge rounded-pill text-bg-warning">Innovation</span></div>
+                            <h2 class="h3 fw-bold text-primary mb-1">Science Fair Triumphs</h2>
+                            <p class="small mb-0">Sustainable energy & AI projects build a greener future.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item position-relative">
+                    <img src="https://media.licdn.com/dms/image/v2/D5612AQHb4OXiTAUJrA/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1702179121573?e=2147483647&v=beta&t=TqcBE30s3tBrrn58u78iWRKhL9QuIW7FqTwmcwi5ga8" class="d-block w-100 hero-img" alt="Sports Day">
+                    <div class="hero-overlay"></div>
+                    <div class="carousel-caption d-block">
+                        <div class="hero-caption mx-auto" style="max-width:920px;">
+                            <div class="d-flex flex-wrap gap-2 mb-2 justify-content-center"><span class="badge rounded-pill text-bg-primary">Teamwork</span><span class="badge rounded-pill text-bg-light text-dark">Fitness</span></div>
+                            <h2 class="h3 fw-bold text-primary mb-1">Sports Day Thrills</h2>
+                            <p class="small mb-0">Races & games that power school spirit.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item position-relative">
+                    <img src="https://static.toiimg.com/thumb/imgsize-23456,msid-63828530,width-600,resizemode-4/63828530.jpg" class="d-block w-100 hero-img" alt="Arts Festival">
+                    <div class="hero-overlay"></div>
+                    <div class="carousel-caption d-block">
+                        <div class="hero-caption mx-auto" style="max-width:920px;">
+                            <div class="d-flex flex-wrap gap-2 mb-2 justify-content-center"><span class="badge rounded-pill text-bg-dark">Culture</span><span class="badge rounded-pill text-bg-warning">Creativity</span></div>
+                            <h2 class="h3 fw-bold text-primary mb-1">Arts Festival Creativity</h2>
+                            <p class="small mb-0">Paintings, sculptures & live performances.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item position-relative">
+                    <img src="https://brookhillschool.files.wordpress.com/2014/05/academicawardsceremonyta-9.jpg" class="d-block w-100 hero-img" alt="Academic Excellence">
+                    <div class="hero-overlay"></div>
+                    <div class="carousel-caption d-block">
+                        <div class="hero-caption mx-auto" style="max-width:920px;">
+                            <div class="d-flex flex-wrap gap-2 mb-2 justify-content-center"><span class="badge rounded-pill text-bg-info">Scholarships</span><span class="badge rounded-pill text-bg-success">Excellence</span></div>
+                            <h2 class="h3 fw-bold text-primary mb-1">Academic Excellence Awards</h2>
+                            <p class="small mb-0">Recognizing top academic performers.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span></button>
+            <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Next</span></button>
+        </div>
+    </header>
+<!-- Day 18 Main Activity End -->
+
+<!-- Day 18 Additional Activity Start: Starting the main content container and adding the Competitions Hub section with title, filters, and card grid for upcoming events. -->
+    <!-- MAIN CONTENT -->
+    <main class="container-fluid px-3 pb-5">
+        <!-- Competitions Hub -->
+        <section id="competitions" class="py-5">
+            <div class="container">
+                <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3">
+                    <h2 class="section-title mb-0"><i class="bi bi-flag text-danger me-2"></i>Upcoming Competitions</h2>
+                    <div class="btn-group" role="group" aria-label="Competition filters">
+                        <button class="btn btn-outline-secondary btn-sm" disabled><i class="bi bi-filter me-1"></i>All</button>
+                        <button class="btn btn-outline-secondary btn-sm" disabled>Math</button>
+                        <button class="btn btn-outline-secondary btn-sm" disabled>Science</button>
+                        <button class="btn btn-outline-secondary btn-sm" disabled>Tech</button>
+                        <button class="btn btn-outline-secondary btn-sm" disabled>Arts</button>
+                    </div>
+                </div>
+                <div class="row g-4">
+                    <div class="col-12 col-md-6 col-xl-3"><div class="card feature-card h-100"><div class="card-body"><div class="d-flex align-items-center justify-content-between"><span class="badge rounded-pill text-bg-primary">Math</span><span class="text-muted small"><i class="bi bi-calendar2 me-1"></i>Sep 15</span></div><h5 class="mt-2 mb-1">Regional Math Olympiad</h5><p class="small text-muted mb-3">Challenge your problem‑solving across algebra, number theory and geometry.</p><div class="d-flex align-items-center gap-2 small mb-3"><i class="bi bi-geo-alt"></i> Main Hall</div><button class="btn btn-primary w-100" disabled>Register (Opens Soon)</button></div></div></div>
+                    <div class="col-12 col-md-6 col-xl-3"><div class="card feature-card h-100"><div class="card-body"><div class="d-flex align-items-center justify-content-between"><span class="badge rounded-pill text-bg-success">Science</span><span class="text-muted small"><i class="bi bi-calendar2 me-1"></i>Oct 05</span></div><h5 class="mt-2 mb-1">Science Fair: Sustainable Tech</h5><p class="small text-muted mb-3">From clean energy to bio‑design. Showcase experiments and prototypes.</p><div class="d-flex align-items-center gap-2 small mb-3"><i class="bi bi-geo-alt"></i> Auditorium</div><button class="btn btn-outline-success w-100" disabled>Project Guidelines</button></div></div></div>
+                    <div class="col-12 col-md-6 col-xl-3"><div class="card feature-card h-100"><div class="card-body"><div class="d-flex align-items-center justify-content-between"><span class="badge rounded-pill text-bg-info">Tech</span><span class="text-muted small"><i class="bi bi-calendar2 me-1"></i>Nov 10</span></div><h5 class="mt-2 mb-1">Robotics Challenge</h5><p class="small text-muted mb-3">Line following, maze navigation and robot soccer modules.</p><div class="d-flex align-items-center gap-2 small mb-3"><i class="bi bi-geo-alt"></i> Innovation Lab</div><button class="btn btn-outline-primary w-100" disabled>Team Formation</button></div></div></div>
+                    <div class="col-12 col-md-6 col-xl-3"><div class="card feature-card h-100"><div class="card-body"><div class="d-flex align-items-center justify-content-between"><span class="badge rounded-pill text-bg-warning">Arts</span><span class="text-muted small"><i class="bi bi-calendar2 me-1"></i>Dec 01</span></div><h5 class="mt-2 mb-1">Design & Infographics</h5><p class="small text-muted mb-3">Visualize data from campus research into compelling stories.</p><div class="d-flex align-items-center gap-2 small mb-3"><i class="bi bi-geo-alt"></i> Gallery</div><button class="btn btn-outline-warning w-100" disabled>Brief & Rubric</button></div></div></div>
+                </div>
+            </div>
+        </section>
+<!-- Day 18 Additional Activity End -->
+
+<!-- Day 19 Main Activity Start: Adding the Winners section with leaderboard list and student success card, including testimonials and stats for motivation. -->
+        <!-- Winners / Student Success (Leaderboard) -->
+        <section id="winners" class="py-5">
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-12 col-lg-7"><div class="card winner-card h-100"><div class="card-body"><h2 class="section-title mb-3"><i class="bi bi-trophy text-warning me-2"></i>Current Winners</h2><ol class="list-group list-group-numbered"><li class="list-group-item d-flex justify-content-between align-items-start"><div class="ms-2 me-auto"><div class="fw-semibold">Alex Rivera — Science Fair</div><span class="text-muted small">AI‑assisted water purification</span></div><span class="badge text-bg-warning rounded-pill"><i class="bi bi-award-fill me-1"></i>Gold</span></li><li class="list-group-item d-flex justify-content-between align-items-start"><div class="ms-2 me-auto"><div class="fw-semibold">Priya Sharma — Math Bowl</div><span class="text-muted small">Number theory relay</span></div><span class="badge text-bg-secondary rounded-pill"><i class="bi bi-award-fill me-1"></i>Silver</span></li><li class="list-group-item d-flex justify-content-between align-items-start"><div class="ms-2 me-auto"><div class="fw-semibold">Ethan Lee — Robotics</div><span class="text-muted small">Autonomous maze solver</span></div><span class="badge rounded-pill" style="background:#cd7f32;color:#fff"><i class="bi bi-award-fill me-1"></i>Bronze</span></li></ol></div></div></div>
+                    <div class="col-12 col-lg-5"><div class="card feature-card h-100"><div class="card-body"><h2 class="section-title mb-3"><i class="bi bi-stars text-primary me-2"></i>Student Success</h2><div class="d-flex align-items-center gap-3 mb-3"><img src="https://images.unsplash.com/photo-1729821728830-068bbff90645?q=80&w=300&auto=format&fit=crop" class="rounded-circle" style="width:64px;height:64px;object-fit:cover" alt="Alex"><div><div class="fw-semibold">Alex Rivera</div><div class="small text-muted">“Mentorship + hands‑on labs helped me turn an idea into a working prototype.”</div></div></div><div class="row g-3 text-center"><div class="col-4"><div class="p-2 rounded-3 bg-white shadow-sm"><div class="fw-bold h5 mb-0">8</div><div class="small text-muted">Patents</div></div></div><div class="col-4"><div class="p-2 rounded-3 bg-white shadow-sm"><div class="fw-bold h5 mb-0">120+</div><div class="small text-muted">Projects</div></div></div><div class="col-4"><div class="p-2 rounded-3 bg-white shadow-sm"><div class="fw-bold h5 mb-0">24</div><div class="small text-muted">Teams</div></div></div></div></div></div> </div>
+                </div>
+            </div>
+        </section>
+<!-- Day 19 Main Activity End -->
+
+<!-- Day 19 Additional Activity Start: Implementing the Student Success Stories section with cards featuring images, titles, descriptions, and tags for inspirational content. -->
+        <!-- NEW: Student Success Stories -->
+        <section id="success" class="py-5">
+            <div class="container">
+                <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3">
+                    <h2 class="section-title mb-0"><i class="bi bi-chat-square-quote text-success me-2"></i>Student Success Stories</h2>
+                    <span class="badge rounded-pill text-bg-secondary"><i class="bi bi-people me-1"></i>Community Picks</span>
+                </div>
+                <div class="row g-4">
+                    <div class="col-12 col-md-6 col-xl-4"><div class="card feature-card h-100"><img src="https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?q=80&w=1200&auto=format&fit=crop" class="card-img-top" alt="Success Story 1"><div class="card-body"><h5>From Struggling to State Topper</h5><p class="small text-muted">Weekly math labs + peer tutoring lifted Aarav from C to A+ in 6 months.</p><div class="d-flex align-items-center small text-muted"><i class="bi bi-hash me-1"></i>Math • Olympiad Track</div></div></div></div>
+                    <div class="col-12 col-md-6 col-xl-4"><div class="card feature-card h-100"><img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=1200&auto=format&fit=crop" class="card-img-top" alt="Success Story 2"><div class="card-body"><h5>Girls Who Code — Winner</h5><p class="small text-muted">Diya’s team built a recycling app that won the city hackathon.</p><div class="d-flex align-items-center small text-muted"><i class="bi bi-hash me-1"></i>Tech • App Dev</div></div></div></div>
+                    <div class="col-12 col-xl-4"><div class="card feature-card h-100"><img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop" class="card-img-top" alt="Success Story 3"><div class="card-body"><h5>Robotics to Research</h5><p class="small text-muted">Meera’s autonomous rover now assists the Enviro Club’s field surveys.</p><div class="d-flex align-items-center small text-muted"><i class="bi bi-hash me-1"></i>Engineering • Robotics</div></div></div></div>
+                </div>
+            </div>
+        </section>
+<!-- Day 19 Additional Activity End -->
+
+<!-- Day 20 Main Activity Start: Creating the STEM Concepts section with tiled cards listing key topics in Science, Technology, Engineering, and Mathematics for educational overview. -->
+        <!-- STEM Concepts -->
+        <section id="stem" class="py-5">
+            <div class="container">
+                <h2 class="section-title mb-4"><i class="bi bi-cpu text-info me-2"></i>STEM Concepts</h2>
+                <div class="row g-4">
+                    <div class="col-12 col-md-6 col-lg-3"><div class="card stem-tile h-100"><div class="card-body"><div class="d-flex align-items-center mb-2"><i class="bi bi-beaker text-primary me-2"></i><h5 class="m-0">Science</h5></div><ul class="small text-muted mb-0"><li>Experimental design</li><li>Energy & environment</li><li>Life sciences</li></ul></div></div></div>
+                    <div class="col-12 col-md-6 col-lg-3"><div class="card stem-tile h-100"><div class="card-body"><div class="d-flex align-items-center mb-2"><i class="bi bi-cpu-fill text-danger me-2"></i><h5 class="m-0">Technology</h5></div><ul class="small text-muted mb-0"><li>Coding & AI basics</li><li>Data visualization</li><li>Cyber safety</li></ul></div></div></div>
+                    <div class="col-12 col-md-6 col-lg-3"><div class="card stem-tile h-100"><div class="card-body"><div class="d-flex align-items-center mb-2"><i class="bi bi-gear-fill text-success me-2"></i><h5 class="m-0">Engineering</h5></div><ul class="small text-muted mb-0"><li>Design thinking</li><li>Robotics & sensors</li><li>Rapid prototyping</li></ul></div></div></div>
+                    <div class="col-12 col-md-6 col-lg-3"><div class="card stem-tile h-100"><div class="card-body"><div class="d-flex align-items-center mb-2"><i class="bi bi-calculator-fill text-warning me-2"></i><h5 class="m-0">Mathematics</h5></div><ul class="small text-muted mb-0"><li>Competitions & proofs</li><li>Statistics & logic</li><li>Modeling & simulations</li></ul></div></div></div>
+                </div>
+            </div>
+        </section>
+<!-- Day 20 Main Activity End -->
+
+<!-- Day 20 Additional Activity Start: Implementing tabbed Departments & Tracks section with navigation pills and content panes for Science, Technology, Engineering, and Math tracks. -->
+        <!-- Departments & Tracks (tabbed) -->
+        <section id="tracks" class="py-5">
+            <div class="container">
+                <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3"><h2 class="section-title mb-0"><i class="bi bi-diagram-3 text-danger me-2"></i>Departments & Tracks</h2>
+                    <ul class="nav nav-pills" role="tablist"><li class="nav-item" role="presentation"><button class="nav-link active" data-bs-toggle="pill" data-bs-target="#tabSci" type="button" role="tab">Science</button></li><li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#tabTech" type="button" role="tab">Technology</button></li><li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#tabEng" type="button" role="tab">Engineering</button></li><li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#tabMath" type="button" role="tab">Math</button></li></ul></div>
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="tabSci" role="tabpanel"><div class="row g-4"><div class="col-12 col-md-6 col-lg-3"><div class="card feature-card h-100"><div class="card-body"><h5>Bio Lab</h5><p class="small text-muted">Microscopy, genetics kits, growth chambers.</p><span class="badge text-bg-success">Enrolment Open</span></div></div></div><div class="col-12 col-md-6 col-lg-3"><div class="card feature-card h-100"><div class="card-body"><h5>Environmental Science</h5><p class="small text-muted">Field sensors • Water testing • GIS basics.</p><span class="badge text-bg-primary">Popular</span></div></div></div><div class="col-12 col-md-6 col-lg-3"><div class="card feature-card h-100"><div class="card-body"><h5>Astrophysics</h5><p class="small text-muted">Telescope nights and data reduction.</p><span class="badge text-bg-warning">New</span></div></div></div><div class="col-12 col-md-6 col-lg-3"><div class="card feature-card h-100"><div class="card-body"><h5>Biochemistry</h5><p class="small text-muted">Protein assays • Enzyme kinetics.</p><span class="badge text-bg-secondary">Limited Seats</span></div></div></div></div></div>
+                    <div class="tab-pane fade" id="tabTech" role="tabpanel"><div class="row g-4"><div class="col-12 col-md-6 col-lg-3"><div class="card feature-card h-100"><div class="card-body"><h5>AI & ML</h5><p class="small text-muted">From basics to model evaluation.</p><span class="badge text-bg-info">Capstone</span></div></div></div><div class="col-12 col-md-6 col-lg-3"><div class="card feature-card h-100"><div class="card-body"><h5>Web Dev</h5><p class="small text-muted">HTML • CSS • Bootstrap • Accessibility.</p></div></div></div><div class="col-12 col-md-6 col-lg-3"><div class="card feature-card h-100"><div class="card-body"><h5>Cybersecurity</h5><p class="small text-muted">Threat basics and safe computing.</p></div></div></div><div class="col-12 col-md-6 col-lg-3"><div class="card feature-card h-100"><div class="card-body"><h5>Data Science</h5><p class="small text-muted">Spreadsheets to dashboards.</p></div></div></div></div></div>
+                    <div class="tab-pane fade" id="tabEng" role="tabpanel"><div class="row g-4"><div class="col-12 col-md-6 col-lg-3"><div class="card feature-card h-100"><div class="card-body"><h5>Robotics</h5><p class="small text-muted">Sensors • Actuators • Control.</p></div></div></div><div class="col-12 col-md-6 col-lg-3"><div class="card feature-card h-100"><div class="card-body"><h5>CAD & 3D Print</h5><p class="small text-muted">Rapid prototyping workshop.</p></div></div></div><div class="col-12 col-md-6 col-lg-3"><div class="card feature-card h-100"><div class="card-body"><h5>Electronics</h5><p class="small text-muted">Circuits • Microcontrollers.</p></div></div></div><div class="col-12 col-md-6 col-lg-3"><div class="card feature-card h-100"><div class="card-body"><h5>Design Thinking</h5><p class="small text-muted">Empathy • Ideate • Prototype.</p></div></div></div></div></div>
+                    <div class="tab-pane fade" id="tabMath" role="tabpanel"><div class="row g-4"><div class="col-12 col-md-6 col-lg-3"><div class="card feature-card h-100"><div class="card-body"><h5>Math Olympiad</h5><p class="small text-muted">Strategy sessions weekly.</p></div></div></div><div class="col-12 col-md-6 col-lg-3"><div class="card feature-card h-100"><div class="card-body"><h5>Statistics</h5><p class="small text-muted">Data, inference, experiments.</p></div></div></div><div class="col-12 col-md-6 col-lg-3"><div class="card feature-card h-100"><div class="card-body"><h5>Discrete Math</h5><p class="small text-muted">Logic • Graphs • Counting.</p></div></div></div><div class="col-12 col-md-6 col-lg-3"><div class="card feature-card h-100"><div class="card-body"><h5>Modeling</h5><p class="small text-muted">Real‑world math projects.</p></div></div></div></div></div>
+                </div>
+            </div>
+        </section>
+<!-- Day 20 Additional Activity End -->
+
+<!-- Day 21 Main Activity Start: Adding the Study Lessons section with recently watched videos and upcoming lessons list for educational resources and scheduling. -->
+        <!-- Study Lessons (Recently watched + upcoming) -->
+        <section id="lessons" class="py-5">
+            <div class="container">
+                <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3"><h2 class="section-title mb-0"><i class="bi bi-collection-play text-primary me-2"></i>Study Lessons</h2><span class="badge rounded-pill text-bg-secondary"><i class="bi bi-clock me-1"></i>Auto‑saves progress (demo)</span></div>
+                <div class="row g-4 align-items-stretch">
+                    <div class="col-12 col-lg-8"><div class="card feature-card h-100"><div class="card-body"><h5 class="fw-semibold mb-3">Recently Watched</h5><div class="row g-3"><div class="col-12 col-md-4"><div class="ratio ratio-16x9 rounded overflow-hidden shadow-sm"><iframe src="https://www.youtube.com/embed/2ePf9rue1Ao" title="Physics: Waves & Interference" allowfullscreen></iframe></div><div class="small mt-2 text-muted">Physics • Waves & Interference</div></div><div class="col-12 col-md-4"><div class="ratio ratio-16x9 rounded overflow-hidden shadow-sm"><iframe src="https://www.youtube.com/embed/kxA7xvF0Jks?si=1jWqRZjLhoxKVc0q" title="Algebra: Quadratic Functions" allowfullscreen></iframe></div><div class="small mt-2 text-muted">Math • Quadratic Functions</div></div><div class="col-12 col-md-4"><div class="ratio ratio-16x9 rounded overflow-hidden shadow-sm"><iframe src="https://www.youtube.com/embed/2V1FtfBDsLU" title="Intro to Python" allowfullscreen></iframe></div><div class="small mt-2 text-muted">Technology • Intro to Python</div></div></div></div></div></div>
+                    <div class="col-12 col-lg-4"><div class="card feature-card h-100"><div class="card-body"><h5 class="fw-semibold mb-3">Upcoming Lessons</h5><ul class="list-group list-group-flush"><li class="list-group-item d-flex align-items-start"><div class="me-2"><i class="bi bi-calendar-event text-primary"></i></div><div><div class="fw-semibold">Calculus — Limits</div><div class="small text-muted">Sep 02, 10:00–11:00 • Room 302</div></div></li><li class="list-group-item d-flex align-items-start"><div class="me-2"><i class="bi bi-calendar-event text-success"></i></div><div><div class="fw-semibold">Chemistry — Stoichiometry</div><div class="small text-muted">Sep 03, 12:30–13:30 • Lab A</div></div></li><li class="list-group-item d-flex align-items-start"><div class="me-2"><i class="bi bi-calendar-event text-danger"></i></div><div><div class="fw-semibold">CS — Data Structures</div><div class="small text-muted">Sep 04, 09:30–10:30 • Comp Lab</div></div></li></ul><a href="#" class="btn btn-outline-primary w-100 mt-3 disabled" aria-disabled="true"><i class="bi bi-view-list me-1"></i>View Full Study Plan</a></div></div></div>
+                </div>
+            </div>
+        </section>
+<!-- Day 21 Main Activity End -->
+
+<!-- Day 21 Additional Activity Start: Implementing the Research Highlights section with featured cards showcasing student-led projects with images, descriptions, and badges. -->
+        <!-- Research Highlights -->
+        <section id="research" class="py-5">
+            <div class="container">
+                <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3"><h2 class="section-title mb-0"><i class="bi bi-flask text-success me-2"></i>Research Highlights</h2><span class="badge rounded-pill text-bg-primary"><i class="bi bi-magic me-1"></i>Student‑led</span></div>
+                <div class="row g-4"><div class="col-12 col-md-6 col-lg-4"><div class="card feature-card h-100 position-relative"><div class="position-absolute top-0 end-0 m-2 badge text-bg-warning">Featured</div><img src="https://cdn.pixabay.com/photo/2022/08/13/05/36/water-treatment-plant-7382931_640.jpg" class="card-img-top" alt="Water Purification"><div class="card-body"><h5>Low‑cost Water Purification</h5><p class="small text-muted">ML‑optimized filter media reduces contaminants by 92% in field trials.</p><span class="badge text-bg-success">Enviro</span> <span class="badge text-bg-info">AI</span></div></div></div><div class="col-12 col-md-6 col-lg-4"><div class="card feature-card h-100 position-relative"><img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?q=80&w=1200&auto=format&fit=crop" class="card-img-top" alt="Robotics"><div class="card-body"><h5>Autonomous Maze Robot</h5><p class="small text-muted">Sensor fusion boosts navigation accuracy in dynamic layouts.</p><span class="badge text-bg-secondary">Robotics</span> <span class="badge text-bg-primary">Control</span></div></div></div><div class="col-12 col-lg-4"><div class="card feature-card h-100 position-relative"><img src="https://images.unsplash.com/photo-1518314916381-77a37c2a49ae?q=80&w=1200&auto=format&fit=crop" class="card-img-top" alt="Astronomy"><div class="card-body"><h5>Exoplanet Transit Hunt</h5><p class="small text-muted">Students process telescope data to detect candidate transit dips.</p><span class="badge text-bg-dark">Astro</span> <span class="badge text-bg-warning">Data</span></div></div></div></div>
+            </div>
+        </section>
+<!-- Day 21 Additional Activity End -->
+
+<!-- Day 22 Main Activity Start: Adding the Mentors & Faculty section with profile cards including images, names, specialties, and office hours for accessibility. -->
+        <!-- Mentors & Faculty -->
+        <section id="mentors" class="py-5">
+            <div class="container">
+                <h2 class="section-title mb-4"><i class="bi bi-person-badge text-primary me-2"></i>Mentors & Faculty</h2>
+                <div class="row g-4"><div class="col-12 col-md-6 col-lg-3"><div class="card feature-card h-100 text-center p-3"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=300&auto=format&fit=crop" class="rounded-circle mx-auto mb-2" style="width:84px;height:84px;object-fit:cover" alt="Mentor"><h6 class="mb-0">Dr. A. N. Rao</h6><div class="small text-muted">Physics</div><div class="small mt-2">Office Hours: Tue 2–4</div></div></div><div class="col-12 col-md-6 col-lg-3"><div class="card feature-card h-100 text-center p-3"><img src="https://images.unsplash.com/photo-1554151228-14d9def656e4?q=80&w=300&auto=format&fit=crop" class="rounded-circle mx-auto mb-2" style="width:84px;height:84px;object-fit:cover" alt="Mentor"><h6 class="mb-0">Prof. I. Kaur</h6><div class="small text-muted">Mathematics</div><div class="small mt-2">Office Hours: Wed 11–1</div></div></div><div class="col-12 col-md-6 col-lg-3"><div class="card feature-card h-100 text-center p-3"><img src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=300&auto=format&fit=crop" class="rounded-circle mx-auto mb-2" style="width:84px;height:84px;object-fit:cover" alt="Mentor"><h6 class="mb-0">Ms. J. Patel</h6><div class="small text-muted">Computer Science</div><div class="small mt-2">Office Hours: Thu 3–5</div></div></div><div class="col-12 col-md-6 col-lg-3"><div class="card feature-card h-100 text-center p-3"><img src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?q=80&w=300&auto=format&fit=crop" class="rounded-circle mx-auto mb-2" style="width:84px;height:84px;object-fit:cover" alt="Mentor"><h6 class="mb-0">Mr. D. Kim</h6><div class="small text-muted">Engineering</div><div class="small mt-2">Office Hours: Fri 10–12</div></div></div></div>
+            </div>
+        </section>
+<!-- Day 22 Main Activity End -->
+
+<!-- Day 22 Additional Activity Start: Implementing the Labs & Facilities and KPIs/Achievements sections with icon cards and progress bars for showcasing resources and metrics. -->
+        <!-- Labs & Facilities -->
+        <section id="facilities" class="py-5">
+            <div class="container"><h2 class="section-title mb-4"><i class="bi bi-building-gear text-success me-2"></i>Labs & Facilities</h2>
+                <div class="row row-cols-2 row-cols-md-4 g-3"><div class="col"><div class="card feature-card h-100 p-3 text-center"><i class="bi bi-motherboard h3 text-primary"></i><div class="small mt-2">Innovation Lab</div></div></div><div class="col"><div class="card feature-card h-100 p-3 text-center"><i class="bi bi-droplet h3 text-info"></i><div class="small mt-2">Chem Lab</div></div></div><div class="col"><div class="card feature-card h-100 p-3 text-center"><i class="bi bi-lightning-charge h3 text-warning"></i><div class="small mt-2">Electronics Lab</div></div></div><div class="col"><div class="card feature-card h-100 p-3 text-center"><i class="bi bi-globe2 h3 text-success"></i><div class="small mt-2">Geo Studio</div></div></div></div>
+            </div>
+        </section>
+        <!-- KPIs / Achievements -->
+        <section id="kpi" class="py-5">
+            <div class="container"><h2 class="section-title mb-4"><i class="bi bi-graph-up-arrow text-warning me-2"></i>Achievements & KPIs</h2>
+                <div class="row g-4"><div class="col-12 col-md-6"><div class="card feature-card h-100"><div class="card-body"><h6 class="fw-semibold">Competition Participation</h6><div class="progress mb-3" role="progressbar" aria-label="Participation" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100"><div class="progress-bar" style="width:78%">78%</div></div><h6 class="fw-semibold">Scholarship Grants Utilized</h6><div class="progress mb-3" role="progressbar" aria-label="Grants" aria-valuenow="64" aria-valuemin="0" aria-valuemax="100"><div class="progress-bar bg-success" style="width:64%">64%</div></div><h6 class="fw-semibold">STEM Outreach Impact</h6><div class="progress" role="progressbar" aria-label="Outreach" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"><div class="progress-bar bg-info" style="width:90%">90%</div></div></div></div></div><div class="col-12 col-md-6"><div class="card feature-card h-100"><div class="card-body"><div class="row g-3 text-center"><div class="col-6 col-lg-3"><div class="p-3 rounded-3 bg-white shadow-sm"><div class="fw-bold h4 mb-0">34</div><div class="small text-muted">Medals</div></div></div><div class="col-6 col-lg-3"><div class="p-3 rounded-3 bg-white shadow-sm"><div class="fw-bold h4 mb-0">120+</div><div class="small text-muted">Projects</div></div></div><div class="col-6 col-lg-3"><div class="p-3 rounded-3 bg-white shadow-sm"><div class="fw-bold h4 mb-0">18</div><div class="small text-muted">Partners</div></div></div><div class="col-6 col-lg-3"><div class="p-3 rounded-3 bg-white shadow-sm"><div class="fw-bold h4 mb-0">96%</div><div class="small text-muted">Satisfaction</div></div></div></div></div></div></div>
+            </div>
+        </section>
+<!-- Day 22 Additional Activity End -->
+
+    </main>
+    <!-- FOOTER -->
+    <footer class="py-4 mt-4">
+        <div class="container text-center"><p class="mb-0">&copy; 2025 Academic Portal. Inspiring curiosity, rigor, and creativity.</p></div>
+    </footer>
+    <!-- Back to top button -->
+    <a href="#home" class="btn btn-primary rounded-circle to-top" aria-label="Back to top"><i class="bi bi-arrow-up"></i></a>
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
+<!-- Day 23 Additional Activity End -->
